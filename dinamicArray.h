@@ -25,7 +25,7 @@ public:
     void insert(T n) {//inserisci alla prima posizione libera
         if (len >= maxLen) {
             maxLen *= 2;
-            T* tmp = new int[maxLen];
+            T* tmp = new T[maxLen];
             for (int i = 0; i < len; i++) {
                 tmp[i] = array[i];
             }
