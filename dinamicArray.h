@@ -19,12 +19,12 @@ public:
         cout << "Dinamic array with max size: " << maxLen << endl;
         if (!crescent) {
             for (int i = len-1; i >= 0; i--) {
-                cout << len-1-i << ": " << array[i] << endl;
+                cout <<'\t'<< len-1-i << ": " << array[i] << endl;
             }
             return;
         }
         for (int i = 0; i < len; i++) {
-            cout << i << ": " << array[i] << endl;
+            cout <<'\t'<< i << ": " << array[i] << endl;
         }
     }
 
