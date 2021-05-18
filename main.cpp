@@ -106,7 +106,7 @@ int main() {
 	if (!load(&list)) {
 		cout << "File not found" << endl;
 		return 1;
-	};
+	}
 	cout << "--Data loaded--" << endl;
 	print(&list, 1);
 	cout << endl;
