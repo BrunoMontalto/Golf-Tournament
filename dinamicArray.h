@@ -19,7 +19,7 @@ public:
         cout << "Dinamic array with max size: " << maxLen << endl;
         if (!crescent) {
             for (int i = len-1; i >= 0; i--) {
-                cout << i << ": " << array[i] << endl;
+                cout << len-1-i << ": " << array[i] << endl;
             }
             return;
         }
@@ -61,16 +61,16 @@ public:
     }
 
 
-    T pop(int i) {
-        if (i >= maxLen) return -INT_MAX;
-        T toRet = array[i];
-        for (int j = i; j < len; j++) {
+    T* pop(int i) {
+        if (i >= maxLen) return nullptr;
+        T *toRet = &array[i];
+        for (int j = i; j < len-1; j++) {
             array[j] = array[j + 1];
         }
         len--;
 
         if (len <= maxLen / 2) {
-            T* tmp = new int[maxLen / 2];
+            T* tmp = new T[maxLen / 2];
             for (int j = 0; j < len; j++) {
                 tmp[j] = array[j];
             }
@@ -102,8 +102,8 @@ public:
     }
 
 
-    const int* getMaxLen() {
-        return &maxLen;
+    const int getMaxLen() {
+        return maxLen;
     }
 
     int size() {
