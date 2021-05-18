@@ -4,13 +4,10 @@
 #include "dinamicArray.h"
 using namespace std;
 
-
 typedef struct p {
 	string surename, name, club;
 	int birthYear;
 	float score;
-
-	
 }Player;
 
 
@@ -18,11 +15,10 @@ ostream& operator<<(ostream& out, Player& p) {
 	return out << "Name: " << p.name << " Surename: " << p.surename << " Club: " << p.club << " Score: " << p.score << " Birth Year: " << p.birthYear;
 }
 
+
 bool operator >(Player& a, Player& b) {
 	return a.score > b.score;
 }
-
-
 
 
 void split(string s, char c, string *dest) {
@@ -37,6 +33,7 @@ void split(string s, char c, string *dest) {
 		temp += s[i];
 	}
 }
+
 
 // a)
 bool load(DinamicArray<Player>* dest, string filename = "Punteggi.txt"){
@@ -61,6 +58,7 @@ bool load(DinamicArray<Player>* dest, string filename = "Punteggi.txt"){
 
 
 	delete[] reader;
+	return 1;
 }
 
 
@@ -73,7 +71,7 @@ void print(DinamicArray<Player>* list, bool crescent) {
 
 // c)
 void print_from_surename(DinamicArray<Player>* list, string surename) {
-	int score = 0;
+	float score = 0;
 	bool found = 0;
 	for (int i = 0; i < list->size(); i++) {
 		if (list->operator[](i).surename == surename) {
@@ -85,7 +83,7 @@ void print_from_surename(DinamicArray<Player>* list, string surename) {
 	}
 	if (!found) return;
 	for (int i = 0; i < list->size(); i++) {
-		if (list->operator[](i).score == score) {
+		if (list->operator[](i).score == score && list->operator[](i).surename != surename) {
 			cout << list->operator[](i) << endl;
 		}
 	}
@@ -93,24 +91,35 @@ void print_from_surename(DinamicArray<Player>* list, string surename) {
 
 
 // d)
-Player* delete_from_score(float score, DinamicArray<Player>* list) {
-	for (int i = 0; i < list->size();i++) {
+void delete_from_score(float score, DinamicArray<Player>* list) {
+	for (int i = list->size()-1; i >= 0;i--) {
 		if (list->operator[](i).score == score) {
-			return list->pop(i);
+			list->pop(i);
 		}
 	}
-	return nullptr;
 }
-
 
 
 int main() {
 	DinamicArray<Player> list(10);
+	if (!load(&list)) {
+		cout << "File not found" << endl;
+		return 1;
+	};
+	cout << "--Data loaded--" << endl;
+	print(&list, 1);
+	cout << endl;
 
-	load(&list);
-	print(&list, 0);
+	string sn;
+	cout << "Insert surename: ";
+	cin >> sn;
+	print_from_surename(&list, sn);
 
-	delete_from_score(69.1, &list);
-	list.print();
+	float score;
+	cout << "\nDelete users with score?: ";
+	cin >> score;
+	delete_from_score(score, &list);
+	print(&list, 1);
+
 	return 0;
 }
