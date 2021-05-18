@@ -15,14 +15,20 @@ public:
         array = new T[maxLen];
     };
 
-    void print() {
-        cout << "Array Dinamico di dimensione massima " << maxLen << endl;
+    void print(bool crescent = 1) {
+        cout << "Dinamic array with max size: " << maxLen << endl;
+        if (!crescent) {
+            for (int i = len-1; i >= 0; i--) {
+                cout << i << ": " << array[i] << endl;
+            }
+            return;
+        }
         for (int i = 0; i < len; i++) {
             cout << i << ": " << array[i] << endl;
         }
     }
 
-    void insert(T n) {//inserisci alla prima posizione libera
+    void insert(T n) {
         if (len >= maxLen) {
             maxLen *= 2;
             T* tmp = new T[maxLen];
@@ -41,6 +47,20 @@ public:
     }
 
 
+    void sort() {
+        bool sorted = 0;
+        while (!sorted) {
+            sorted = 1;
+            for (int i = 0; i < len-1; i++) {
+                if (array[i] > array[i + 1]) {
+                    sorted = 0;
+                    swap(array[i], array[i+1]);
+                }
+            }
+        }
+    }
+
+
     T pop(int i) {
         if (i >= maxLen) return -INT_MAX;
         T toRet = array[i];
@@ -54,7 +74,7 @@ public:
             for (int j = 0; j < len; j++) {
                 tmp[j] = array[j];
             }
-            T* toDel = array;//mamama si
+            T* toDel = array;
             array = tmp;
             delete[] toDel;
             maxLen /= 2;
@@ -84,6 +104,10 @@ public:
 
     const int* getMaxLen() {
         return &maxLen;
+    }
+
+    int size() {
+        return len;
     }
 
 
