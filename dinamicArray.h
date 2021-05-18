@@ -1,7 +1,6 @@
 #pragma once
 #include<iostream>
 #include <stdio.h>
-#define INT_MAX 2147483647
 using namespace std;
 
 template<class T>
@@ -15,6 +14,7 @@ public:
         array = new T[maxLen];
     };
 
+
     void print(bool crescent = 1) {
         cout << "Dinamic array with max size: " << maxLen << endl;
         if (!crescent) {
@@ -27,6 +27,7 @@ public:
             cout << i << ": " << array[i] << endl;
         }
     }
+
 
     void insert(T n) {
         if (len >= maxLen) {
@@ -42,21 +43,22 @@ public:
         array[len++] = n;
     }
 
+
     int pop_out() {
         return pop(len - 1);
     }
-
+ 
 
     void sort() {
-        bool sorted = 0;
-        while (!sorted) {
-            sorted = 1;
-            for (int i = 0; i < len-1; i++) {
+        for(int j = 0; j<len-1; j++){
+            bool sorted = 1;
+            for (int i = 0; i < len-j-1; i++) {
                 if (array[i] > array[i + 1]) {
                     sorted = 0;
                     swap(array[i], array[i+1]);
                 }
             }
+            if (sorted)break;
         }
     }
 
@@ -85,8 +87,6 @@ public:
     }
 
 
-
-
     T& operator[](int i)const {
         if (i >= 0 && i < len) {
             return array[i];
@@ -106,15 +106,9 @@ public:
         return maxLen;
     }
 
+
     int size() {
         return len;
     }
-
-
-
-
-
-
-
 
 };
