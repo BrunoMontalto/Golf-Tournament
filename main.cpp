@@ -6,6 +6,9 @@ using namespace std;
 
 
 
+
+
+
 typedef struct p {
 	string surename, name, club;
 	int score, birthYear;
@@ -17,6 +20,12 @@ typedef struct p {
 ostream& operator<<(ostream& out, Player& p) {
 	return out << "Name: " << p.name << " Surename: " << p.surename << " Club: " << p.club << " Score: " << p.score << " Birth Year: " << p.birthYear;
 }
+
+bool operator >(Player& a, Player& b) {
+	return a.score > b.score;
+}
+
+
 
 
 void split(string s, char c, string *dest) {
@@ -32,7 +41,7 @@ void split(string s, char c, string *dest) {
 	}
 }
 
-
+// a)
 bool load(DinamicArray<Player>* dest, string filename = "Punteggi.txt"){
 	ifstream file;
 	file.open(filename);
@@ -58,12 +67,39 @@ bool load(DinamicArray<Player>* dest, string filename = "Punteggi.txt"){
 }
 
 
+// b)
+void print(DinamicArray<Player>* list, bool crescent) {
+	list->sort();
+	list->print(crescent);
+}
+
+
+// c)
+void print_from_surename(DinamicArray<Player>* list, string surename) {
+	int score = 0;
+	bool found = 0;
+	for (int i = 0; i < list->size(); i++) {
+		if (list->operator[](i).surename == surename) {
+			score = list->operator[](i).score;
+			cout<< list->operator[](i) <<endl;
+			found = 1;
+			break;
+		}
+	}
+	if (!found) return;
+	for (int i = 0; i < list->size(); i++) {
+		if (list->operator[](i).score == score) {
+			cout << list->operator[](i) << endl;
+		}
+	}
+}
+
 
 
 int main() {
 	DinamicArray<Player> list(10);
 
 	load(&list);
-	list.print();
+	print(&list, 0);
 	return 0;
 }
