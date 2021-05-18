@@ -5,13 +5,10 @@
 using namespace std;
 
 
-
-
-
-
 typedef struct p {
 	string surename, name, club;
-	int score, birthYear;
+	int birthYear;
+	float score;
 
 	
 }Player;
@@ -56,7 +53,7 @@ bool load(DinamicArray<Player>* dest, string filename = "Punteggi.txt"){
 		p->surename = reader[0];
 		p->name = reader[1];
 		p->club = reader[2];
-		p->score = stoi(reader[3]);
+		p->score = atof(reader[3].c_str());
 		p->birthYear = stoi(reader[4]);
 		
 		dest->insert(*p);	
@@ -95,11 +92,25 @@ void print_from_surename(DinamicArray<Player>* list, string surename) {
 }
 
 
+// d)
+Player* delete_from_score(float score, DinamicArray<Player>* list) {
+	for (int i = 0; i < list->size();i++) {
+		if (list->operator[](i).score == score) {
+			return list->pop(i);
+		}
+	}
+	return nullptr;
+}
+
+
 
 int main() {
 	DinamicArray<Player> list(10);
 
 	load(&list);
 	print(&list, 0);
+
+	delete_from_score(69.1, &list);
+	list.print();
 	return 0;
 }
