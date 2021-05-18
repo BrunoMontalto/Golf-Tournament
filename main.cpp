@@ -76,15 +76,16 @@ void print_from_surename(DinamicArray<Player>* list, string surename) {
 	for (int i = 0; i < list->size(); i++) {
 		if (list->operator[](i).surename == surename) {
 			score = list->operator[](i).score;
-			cout<< list->operator[](i) <<endl;
+			cout << '\t' << list->operator[](i) <<endl;
 			found = 1;
 			break;
 		}
 	}
 	if (!found) return;
+	cout << "Players with same score: " << endl;
 	for (int i = 0; i < list->size(); i++) {
 		if (list->operator[](i).score == score && list->operator[](i).surename != surename) {
-			cout << list->operator[](i) << endl;
+			cout << '\t' << list->operator[](i) << endl;
 		}
 	}
 }
@@ -116,8 +117,9 @@ int main() {
 	print_from_surename(&list, sn);
 
 	float score;
-	cout << "\nDelete users with score?: ";
+	cout << "\nDelete players with score?: ";
 	cin >> score;
+	cout << endl;
 	delete_from_score(score, &list);
 	print(&list, 1);
 
